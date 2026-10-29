@@ -286,8 +286,30 @@ Para pasar a formato _tidy_ necesitamos realizar dos operaciones en este caso. E
 Convierte el conjunto de datos TB en _tidy_ utilizando `gather` y `separate`.
 
 ```{r}
+load("data/tb.Rdata")
 
+# Uso de gather
+tb_tidy <- gather(
+  data = raw,
+  key = "demographic",
+  value = "cases",
+  -country, -year
+)
+
+# Uso de separate
+tb_tidy_final <- separate(
+  data = tb_tidy,
+  col = demographic,
+  into = c("sex", "age"),
+  sep = 1
+)
+
+# Comprobación
+head(tb_tidy_final)
+str(tb_tidy_final)
 ```
+
+Lo más relevante de este ejercicio consiste en la separación de la columna demographic en dos diferentes, ya que contenía tanto el sexo como la edad de cada observación.
 
 
 ## Variables almacenadas tanto en filas como en columnas
