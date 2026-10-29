@@ -575,10 +575,28 @@ Separa los datos _tidy_ que teníamos en el ejercicio 2 en dos tablas (data fram
 Opcionalmente se puede crear un identificador, `id`, asociado al nombre de la canción (`track`), y en la tabla de ranking solo usaremos este identificador en lugar del nombre de la canción.
 
 ```{r}
+# Tabla con información de las canciones usando billboard_tidy (ejercicio 2)
+canciones <- unique(billboard_tidy[, c("artist", "track", "time")])
 
-
-
+# Tabla con el ranking de cada canción por semana
+ranking <- unique(billboard_tidy[, c("track", "week", "rank")])
 ```
+
+Usemoa ahora un identificador id, y veamos como quedaría así el nuevo ranking (le voy a llamar ranking2):
+
+```{r}
+# Creo un identificador por canción
+canciones2 <- canciones %>% mutate(id = row_number())
+
+# Tabla con el ranking semanal
+ranking2 <- billboard_tidy %>%
+  select(track, week, rank) %>%
+  left_join(canciones2 %>% select(track, id), by = "track") %>%
+  select(id, week, rank) %>%
+  unique()
+```
+
+
 
 ## TidyR. Una única unidad de observación almacenada en varias tablas
 
@@ -693,7 +711,7 @@ Realiza un histograma de las duraciones de los vuelos entre ambos aeropuertos. �
 ```
 
 ```{r}
-
+#3
 
 ```
 
