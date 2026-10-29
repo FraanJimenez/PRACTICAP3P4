@@ -531,8 +531,34 @@ Una vez hemos creado la variable que queremos, eliminamos las anteriores. Compro
 Utilizando las funciones `group_by`, `summarise` y `filter`, crea un data frame donde se calcule el número de vuelos (`Num_flights`), la distancia media recorrida (`Mean_distance`) y la distancia total recorrida (`Total_distance`) para cada uno de los aviones (`tailnum`) presentes en el conjunto `flights`. Descarta aquellos registros del data frame en los que la variable `tailnum` tenga un valor NA. Utiliza el operador pipe para enlazar las funciones. Almacena el data frame en una variable denominada `Distances_plane`.  
 
 ```{r }
+# Creación del dataframe con las restricciones dadas
+Distances_plane <- flights %>%
+  filter(!is.na(tailnum)) %>%
+  group_by(tailnum) %>%
+  summarise(
+    Num_flights = n(),
+    Mean_distance = mean(distance, na.rm = TRUE),
+    Total_distance = sum(distance, na.rm = TRUE)
+  )
 
+# Comprobación
+str(Distances_plane)
 ```
+
+
+Almacenaremos nuestros cálculos en un dataframe de nombre Distances_plane.
+
+
+En primer lugar tengo flights %>%, que utiliza el conjunto de datos flights como entrada y permite encadenar las operaciones con el operador pipe. 
+
+A continuación, filter(!is.na(tailnum)) elimina los registros en los que no se conoce el identificador del avión. 
+
+Después, group_by(tailnum) agrupa los vuelos según el avión al que pertenecen, de manera que los cálculos se realizan individualmente para cada uno. 
+
+Mediante summarise() se crea una tabla resumida con tres variables: 
+- Num_flights = n() cuenta el número de vuelos de cada avión.
+- Mean_distance = mean(distance, na.rm = TRUE) calcula la distancia media recorrida ignorando los valores ausentes. 
+- Total_distance = sum(distance, na.rm = TRUE) suma las distancias de todos sus vuelos, también ignorando los valores ausentes. 
 
 
 # Ejercicios Extra
