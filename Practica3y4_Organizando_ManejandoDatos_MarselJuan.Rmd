@@ -424,6 +424,9 @@ En nuestro estudio queremos aplicar una serie de criterios de exclusión sobre l
 # Cargo datos
 load("data/VuelosNY.Rdata")
 
+# Busco según el manufacturer para cambiar lo que se pide y ver todas las denominaciones
+unique(planes$manufacturer)
+
 # Transformaciones pedidas
 planes.f <- planes %>%
   filter(
@@ -450,9 +453,18 @@ str(planes.f)
 Crea un data frame denominado `flights.f` que contenga los vuelos que involucren a los aviones presentes en el data frame `planes.f`. Para ello utiliza algunas de las funciones de **XXX_join** y la variable `tailnum` que es común en ambos data frames. 
 
 ```{r }
+# Uso de inner_join()
+flights.f <- inner_join(flights, planes.f, by = "tailnum")
 
-
+#  Comprobamos resultado
+head(flights.f)
+str(flights.f)
 ```
+
+Para resolverlo, hemos usado la función inner_join(), que sirve para combinar los dataframes utilizando en este caso tailnum como clave común. 
+
+Además, conserva únicamente las filas que tienen coincidencia en ambos data frames. Así, se quedan los vuelos correspondientes a los aviones incluidos en planes.f, como se pedía.
+
 
 ### Ejercicio 8
 
