@@ -471,7 +471,9 @@ Además, conserva únicamente las filas que tienen coincidencia en ambos data fr
 Reasigna los nombres de los data frames `planes.f` y `flights.f` a los nombres originales  `planes` y `flights`.
 
 ```{r }
-
+# Reasignación de los nombres de los dataframes
+planes <- planes.f
+flights <- flights.f
 ```
 
 
