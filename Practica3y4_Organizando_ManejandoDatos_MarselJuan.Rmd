@@ -330,9 +330,34 @@ Para obtener la versión _tidy_ primero juntamos todos los días en una variable
 Obtén la versión _tidy_ del conjunto de datos `weather` utilizando las funciones `pivot_longer` y `pivot_wider`. Además cambiaremos las columnas `year`, `month` y `dia` por una única variable `fecha`. Para que la operación `pivot_wider` no de error tendremos que eliminar los NA's cuando usemos `pivot_longer`.
 
 ```{r}
+# Cargo los datos
+load("data/weather.Rdata")
 
+# Resolvemos el ejercicio
+weather_tidy <- raw %>%
+  pivot_longer(
+    cols = d1:d31,
+    names_to = "dia",
+    names_prefix = "d",
+    names_transform = list(dia = as.integer),
+    values_to = "temperatura",
+    values_drop_na = TRUE
+  ) %>%
+  pivot_wider(
+    names_from = element,
+    values_from = temperatura
+  ) %>%
+  mutate(
+    fecha = make_date(year, month, dia)
+  ) %>%
+  select(id, fecha, tmax, tmin)
 
+# Comprobación
+head(weather_tidy)
+str(weather_tidy)
 ```
+
+En este ejercicio 4 he transformado el dataset pedido a formato tidy usando pivot_longer() para agrupar los días y eliminar los valores NA, y pivot_wider() para separar las temperaturas máximas (tmax) y mínimas (tmin) en columnas, combinando también el año, el mes y el día en una única variable fecha, como se pedía.
 
 
 # DPLYR 
