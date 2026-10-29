@@ -485,8 +485,19 @@ Existen variables que, a priori, no tienen demasiado interés para el estudio qu
 * En el data frame  `planes` quédate con todas las variables excepto `speed` y `type`.
 
 ```{r }
+# Todas las variables de flights excepto las mencionadas (uso de la función ends_with)
+flights <- flights %>% select(-time_hour, -ends_with("time"))
 
+# Todas las variables de planes excepto speed y type
+planes <- planes %>% select(-speed, -type)
 ```
+Observamos que el número de variables que había originalmente se ha reducido. 
+
+En el dataframe flights hemos eliminado seis variables (concretamente, hemos eliminado dep_time, sched_dep_time, arr_time, sched_arr_time, air_time y time_hour).
+
+En el dataframe planes hemos eliminado exactamente speed y type, como se pedía.
+
+
 
 ### Ejercicio 10
 
