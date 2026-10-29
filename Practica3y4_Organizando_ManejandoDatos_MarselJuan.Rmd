@@ -390,7 +390,6 @@ En clase de teoría te han explicado cómo utilizar estas funciones y ya has tra
 Vamos a cargar el conjunto de datos ``VuelosNY.Rdata`` que contiene dos data frames: `flights` y `planes`. 
 
 ```{r, include=FALSE}
-
 library(dplyr)
 #library(dbplyr)
 rm(list=ls())
@@ -402,8 +401,18 @@ load("./data/VuelosNY.Rdata")
 Muestra las primeras muestras de ambos data frames para hacerte una idea de las variables que contienen. ¿Qué diferencia existe entre la información mostrada en ambos data frames?
 
 ```{r }
+# Cargo los datos
+load("data/VuelosNY.Rdata")
 
+# Mostrar las primeras muestras de cada dataframe
+head(flights)
+head(planes)
 ```
+
+Diferencia entre ambos: el data frame flights contiene información sobre los vuelos realizados, como la fecha, los aeropuertos de origen y destino, la distancia y los retrasos. 
+
+Por otro lado, planes contiene información sobre los aviones, como su matrícula (tailnum), fabricante (manufacturer), modelo (model) y número de asientos (seats). Ambos conjuntos comparten la variable tailnum, que permite relacionar cada vuelo con el avión que lo realizó.
+
 
 ### Ejercicio 6
 
