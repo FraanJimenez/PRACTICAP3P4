@@ -650,7 +650,21 @@ En primer lugar, creamos un dataframe a partir del dataframe Distances_plane. Us
 Queremos averiguar si existe algún tipo de relación entre el retraso de los vuelos (llegada y salida) y el fabricante. Para ello queremos calcular el retraso medio en la llegada y en la salida de los vuelos (cuando se disponga de esos datos) para cada uno de los fabricantes (`manufacturer`). Propón la estrategia (y el código) a emplear para conseguir proporcionar un data frame ordenado del retraso en la llegada y la salida para cada uno de los fabricantes. ¿Cuáles son los dos fabricantes de aviones que más se retrasan en las salidas? ¿Y en las llegadas?
 
 ```{r }
+Retraso_fabricante <- flights %>%
+  group_by(manufacturer) %>%
+  summarise(
+    Mean_dep_delay = mean(dep_delay, na.rm = TRUE),
+    Mean_arr_delay = mean(arr_delay, na.rm = TRUE),
+    .groups = "drop"
+  )
 
+cat("Los dos fabricantes con mayor retraso en las salidas son:\n") 
+retraso_salidas <- Retraso_fabricante %>% slice_max(order_by = Mean_dep_delay, n = 2, with_ties = FALSE)
+print(retraso_salidas$manufacturer)
+
+cat("Los dos fabricantes con mayor retraso en las llegadas son:\n")
+retraso_llegadas <- Retraso_fabricante %>% slice_max(order_by = Mean_arr_delay, n = 2, with_ties = FALSE)
+print(retraso_llegadas$manufacturer)
 ```
 
 
