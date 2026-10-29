@@ -238,9 +238,34 @@ Obtén la versión _tidy_ de este conjunto de datos usando `pivot_longer`.
 Consejo: puedes eliminar el prefijo `wk` de las semanas mediante el argumento `names_prefix`. Opcionalmente puedes crear una columna `date` a partir de `date.entered`, sumando las semanas transcurridas desde la fecha de entrada en lista.
 
 ```{r}
+load("data/billboard.Rdata")
 
+# Uso de pivot_longer()
+billboard_tidy <- pivot_longer(
+  data = raw,
+  cols = wk1:wk76,
+  names_to = "week",
+  values_to = "rank",
+  names_prefix = "wk",
+  names_transform = list(week = as.integer),
+  values_drop_na = TRUE
+)
 
+# Opcional
+billboard_tidy <- billboard_tidy %>%
+  mutate(
+    date.entered = as.Date(date.entered),
+    date = date.entered + weeks(week - 1)
+  )
+
+# Comprobación de resultados: 
+head(billboard_tidy)
+str(billboard_tidy)
 ```
+
+En el ejercicio 1 se han transformado los datos de formato ancho a largo, agrupando los ingresos en income y sus frecuencias en freq. 
+
+En el ejercicio 2 se ha reorganizado billboard con pivot_longer(), creando las variables week y rank, eliminando NA y calculando las fechas correspondientes.
 
 
 ## Varias variables en una misma columna
