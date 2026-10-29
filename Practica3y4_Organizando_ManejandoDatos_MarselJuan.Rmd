@@ -411,7 +411,7 @@ head(planes)
 
 Diferencia entre ambos: el data frame flights contiene información sobre los vuelos realizados, como la fecha, los aeropuertos de origen y destino, la distancia y los retrasos. 
 
-Por otro lado, planes contiene información sobre los aviones, como su matrícula (tailnum), fabricante (manufacturer), modelo (model) y número de asientos (seats). Ambos conjuntos comparten la variable tailnum, que permite relacionar cada vuelo con el avión que lo realizó.
+Por otro lado, planes contiene información sobre los aviones, como su matrícula (tailnum), fabricante (manufacturer), modelo (model) y número de asientos (seats). Ambos conjuntos comparten la variable tailnum, que permite relacionar cada vuelo con el avión que lo realizó. Además, este dataframe contiene una columna completa de valores NA (speed).
 
 
 ### Ejercicio 6
@@ -421,9 +421,27 @@ En nuestro estudio queremos aplicar una serie de criterios de exclusión sobre l
 * Nota: Revisar el uso de la función filter vista en clase y tener en cuenta los operadores de comparación: igual ==, distinto !=, mayor >, mayor o igual >=, menor <, menor o igual <=.
 
 ```{r }
+# Cargo datos
+load("data/VuelosNY.Rdata")
 
+# Transformaciones pedidas
+planes.f <- planes %>%
+  filter(
+    !manufacturer %in% c("MCDONNELL DOUGLAS", "MCDONNELL-DOUGLAS"),
+    seats >= 90,
+    seats <= 210
+  ) %>%
+  mutate(
+    manufacturer = if_else(
+      manufacturer %in% c("AIRBUS", "AIRBUS INDUSTRIE"),
+      "AIRBUS COMP",
+      manufacturer
+    )
+  )
 
-
+# Comprobación
+head(planes.f)
+str(planes.f)
 ```
 
 
